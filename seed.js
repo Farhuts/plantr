@@ -1,12 +1,21 @@
 const express = require('express');
-const app = express(); 
+const app = express();
 const morgan = require('morgan');
-const database = require('./models.js')
+const {db} = require('./models')
 
 app.use(morgan('dev'));
-// console.log(database.sync);
 
-database.sync({force:true})
+// should be an array
+// Vegetable.create({
+//   name: 'Neuquen',
+//   order_: 0
+// });
+// Vegetable.create({
+//   name: 'General Roca',
+//   order_: 1
+// });
+
+db.sync({force:true})
     .then(()=>{
         console.log('Database synced!')
         // db.clse() only if using a version of node without 'finally'
@@ -16,5 +25,5 @@ database.sync({force:true})
         console.log(err)
     })
     .finally(() => {
-    database.close()
+    db.close()
   })
